@@ -10,11 +10,11 @@ app = Flask(__name__)
 
 @app.route('/webhook', method=['POST'])
 def webhook():
-    if request.method == 'POST':
-        print(request.json)
-        return '', 200
-    else:
-        abort(400)
+    # if request.method == 'POST':
+    #     print(request.json)
+    #     return '', 200
+    # else:
+    #     abort(400)
 
 # @app.route('/hello', method=['POST'])
 # def post_to_slack():
