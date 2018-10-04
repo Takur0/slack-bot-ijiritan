@@ -1,6 +1,5 @@
 # encode: UTF-8
 from flask import Flask, request, abort
-# import pprint
 import requests
 import os
 import json
@@ -10,21 +9,13 @@ app = Flask(__name__)
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    # if request.method == 'POST':
-    #     print(request.json)
-    #     return '', 200
-    # else:
-    #     abort(400)
-
-# @app.route('/hello', method=['POST'])
-# def post_to_slack():
+    body = request.get_data(as_text=True)
     response = requests.post(
         os.environ['SLACK_WEBHOOK_URL'],
-        json.dumps({"text":"Hello, World! From Python!"}),
+        json.dumps({"text":body}),
         headers={'Content-Type': 'application/json'}
     )
 
-    # pprint.pprint(response.json())
 
 if __name__ == "__main__":
     arg_parser = ArgumentParser(
