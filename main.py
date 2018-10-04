@@ -8,7 +8,7 @@ from argparse import ArgumentParser
 
 app = Flask(__name__)
 
-@app.route('/webhook', method=['POST'])
+@app.route('/webhook', methods=['POST'])
 def webhook():
     # if request.method == 'POST':
     #     print(request.json)
@@ -26,7 +26,7 @@ def webhook():
 
     # pprint.pprint(response.json())
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     arg_parser = ArgumentParser(
         usage='Usage: python ' + __file__ + ' [--port <port>] [--help]'
     )
