@@ -15,8 +15,8 @@ def webhook():
     else:
         abort(400)
 
-@app.route('/hello', method=['POST'])
-def post_to_slack():
+# @app.route('/hello', method=['POST'])
+# def post_to_slack():
     response = requests.post(
         os.environ['SLACK_WEBHOOK_URL'],
         json.dumps({"text":"Hello, World! From Python!"}),
