@@ -10,6 +10,7 @@ app = Flask(__name__)
 @app.route('/webhook', methods=['POST'])
 def webhook():
     body = request.get_data(as_text=True)
+    print(body)
     response = requests.post(
         os.environ['SLACK_WEBHOOK_URL'],
         json.dumps({"text":body}),
