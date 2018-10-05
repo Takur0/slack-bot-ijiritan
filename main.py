@@ -17,6 +17,13 @@ def webhook():
         # when message.channel event occuring
         elif body["type"] == "event_callback":
             print(json.dumps(body))
+            messaage = body["event"]["text"]
+            # echo
+            requests.post(
+                os.environ[webhook_url],
+                json.dumps({"text":message}),
+                headers={'Content-Type': 'application/json'}
+            )
             return json.dumps(body)
     else:
         body = request.get_data(as_text=True)
