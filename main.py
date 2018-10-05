@@ -11,7 +11,7 @@ app = Flask(__name__)
 def webhook():
     
     #when url verifing
-    if request.get_json() != None:
+    if request.is_json:
         body = request.get_json()
         if body["type"] == "url_verification":
             response = body["challenge"]
