@@ -9,15 +9,19 @@ app = Flask(__name__)
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    body = request.get_data(as_text=True)
-    print(body)
-    webhook_urls = ['SLACK_WEBHOOK_URL','SLACK_WEBHOOK_URL_CALENDAR']
-    for webhook_url in webhook_urls:    
-        requests.post(
-            os.environ[webhook_url],
-            json.dumps({"text":body}),
-            headers={'Content-Type': 'application/json'}
-        )
+    if request.is_json():
+        body = request.get_json()
+        if body["type"] == "url_verification":
+            response = body["challenge"]
+    else:
+        body = request.get_data(as_text=True)
+        webhook_urls = ['SLACK_WEBHOOK_URL','SLACK_WEBHOOK_URL_CALENDAR']
+        for webhook_url in webhook_urls:    
+            requests.post(
+                os.environ[webhook_url],
+                json.dumps({"text":body}),
+                headers={'Content-Type': 'application/json'}
+            )
 
 
 if __name__ == "__main__":
