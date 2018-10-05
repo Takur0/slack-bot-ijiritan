@@ -9,17 +9,19 @@ app = Flask(__name__)
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    
-    #when url verifing
     if request.is_json:
         body = request.get_json()
+        # when url verifing
         if body["type"] == "url_verification":
-           return Response(headers={'Content-Type': 'application/json'},response=body["challenge"])
+            return Response(headers={'Content-Type': 'plain/text'}, response=body["challenge"])
+        # when message.channel event occuring
+        elif body["type"] == "event_callback":
+            return Response(headers={'Content-Type': 'application/json'}, response=body)
 
     else:
         body = request.get_data(as_text=True)
         webhook_urls = ['SLACK_WEBHOOK_URL','SLACK_WEBHOOK_URL_CALENDAR']
-        for webhook_url in webhook_urls:    
+        for webhook_url in webhook_urls:
             requests.post(
                 os.environ[webhook_url],
                 json.dumps({"text":body}),
