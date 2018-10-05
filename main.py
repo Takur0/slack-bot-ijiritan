@@ -14,7 +14,7 @@ def webhook():
     if request.is_json:
         body = request.get_json()
         if body["type"] == "url_verification":
-            Response(headers={'Content-Type': 'application/json'},response=body["challenge"])
+           return Response(headers={'Content-Type': 'application/json'},response=body["challenge"])
 
     else:
         body = request.get_data(as_text=True)
