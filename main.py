@@ -17,7 +17,7 @@ def webhook():
         # when message.channel event occuring
         elif body["type"] == "event_callback":
             print(json.dumps(body))
-            messaage = body["event"]["text"]
+            message = body["event"]["text"]
             # echo
             webhook_urls = ['SLACK_WEBHOOK_URL','SLACK_WEBHOOK_URL_CALENDAR']
             for webhook_url in webhook_urls:
