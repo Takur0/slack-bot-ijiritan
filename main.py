@@ -19,11 +19,13 @@ def webhook():
             print(json.dumps(body))
             messaage = body["event"]["text"]
             # echo
-            requests.post(
-                os.environ[webhook_url],
-                json.dumps({"text":message}),
-                headers={'Content-Type': 'application/json'}
-            )
+            webhook_urls = ['SLACK_WEBHOOK_URL','SLACK_WEBHOOK_URL_CALENDAR']
+            for webhook_url in webhook_urls:
+                requests.post(
+                    os.environ[webhook_url],
+                    json.dumps({"text":message}),
+                    headers={'Content-Type': 'application/json'}
+                )
             return json.dumps(body)
     else:
         body = request.get_data(as_text=True)
