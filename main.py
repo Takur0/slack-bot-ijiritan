@@ -16,8 +16,8 @@ def webhook():
             return Response(headers={'Content-Type': 'plain/text'}, response=body["challenge"])
         # when message.channel event occuring
         elif body["type"] == "event_callback":
-            return Response(headers={'Content-Type': 'application/json'}, response=body)
-
+            print(body)
+            return body
     else:
         body = request.get_data(as_text=True)
         webhook_urls = ['SLACK_WEBHOOK_URL','SLACK_WEBHOOK_URL_CALENDAR']
