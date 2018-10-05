@@ -1,5 +1,5 @@
 # encode: UTF-8
-from flask import Flask, request, abort
+from flask import Flask, request, Response, abort
 import requests
 import os
 import json
@@ -14,7 +14,7 @@ def webhook():
     if request.is_json:
         body = request.get_json()
         if body["type"] == "url_verification":
-            response = body["challenge"]
+            Response(headers={'Content-Type': 'application/json'},response=body["challenge"])
 
     else:
         body = request.get_data(as_text=True)
