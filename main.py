@@ -11,11 +11,13 @@ app = Flask(__name__)
 def webhook():
     body = request.get_data(as_text=True)
     print(body)
-    response = requests.post(
-        os.environ['SLACK_WEBHOOK_URL'],
-        json.dumps({"text":body}),
-        headers={'Content-Type': 'application/json'}
-    )
+    webhook_urls = ['SLACK_WEBHOOK_URL','SLACK_WEBHOOK_URL_CALENDAR']
+    for webhook_url in webhook_urls:    
+        requests.post(
+            os.environ[webhook_url],
+            json.dumps({"text":body}),
+            headers={'Content-Type': 'application/json'}
+        )
 
 
 if __name__ == "__main__":
