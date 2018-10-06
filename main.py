@@ -8,8 +8,9 @@ from argparse import ArgumentParser
 app = Flask(__name__)
 
 configs = ["debug", "release"]
-
 config = "debug"
+
+ijiritan_user_id = os.environ('IJIRITAN_USER_ID')
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -18,8 +19,9 @@ def webhook():
         # when url verifing
         if body["type"] == "url_verification":
             return Response(headers={'Content-Type': 'plain/text'}, response=body["challenge"])
+
         # when message.channel event occuring
-        elif body["type"] == "event_callback":
+        elif body["type"] == "event_callback" and not body["event"]["user"] == ijiritan_user_id:
             print(json.dumps(body))
             message = body["event"]["text"]
             # echo
