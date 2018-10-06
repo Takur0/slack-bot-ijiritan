@@ -16,13 +16,13 @@ ijiritan_user_id = os.environ['IJIRITAN_USER_ID']
 def webhook():
     if request.is_json:
         body = request.get_json()
+        print(json.dumps(body))
         # when url verifing
         if body["type"] == "url_verification":
             return Response(headers={'Content-Type': 'plain/text'}, response=body["challenge"])
 
-        # when message.channel event occuring
+        # when message.channel event occuring and message is not ijiritan's
         elif body["type"] == "event_callback" and not body["event"]["user"] == ijiritan_user_id:
-            print(json.dumps(body))
             message = body["event"]["text"]
             # echo
             webhook_urls = ['SLACK_WEBHOOK_URL','SLACK_WEBHOOK_URL_CALENDAR']
