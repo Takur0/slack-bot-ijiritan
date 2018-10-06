@@ -7,6 +7,10 @@ from argparse import ArgumentParser
 
 app = Flask(__name__)
 
+configs = ["debug", "release"]
+
+config = "debug"
+
 @app.route('/webhook', methods=['POST'])
 def webhook():
     if request.is_json:
@@ -21,6 +25,11 @@ def webhook():
             # echo
             webhook_urls = ['SLACK_WEBHOOK_URL','SLACK_WEBHOOK_URL_CALENDAR']
             for webhook_url in webhook_urls:
+                # when debug config, ijiritan never chat in public channel
+                if config == "debug":
+                    if webhook_url == 'SLACK_WEBHOOK_URL':
+                        continue
+
                 requests.post(
                     os.environ[webhook_url],
                     json.dumps({"text":message}),
@@ -31,6 +40,11 @@ def webhook():
         body = request.get_data(as_text=True)
         webhook_urls = ['SLACK_WEBHOOK_URL','SLACK_WEBHOOK_URL_CALENDAR']
         for webhook_url in webhook_urls:
+            # when debug config, ijiritan never chat in public channel
+            if config == "debug":
+                if webhook_url == 'SLACK_WEBHOOK_URL':
+                    continue
+
             requests.post(
                 os.environ[webhook_url],
                 json.dumps({"text":body}),
