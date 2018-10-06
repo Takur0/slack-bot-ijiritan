@@ -10,7 +10,7 @@ app = Flask(__name__)
 configs = ["debug", "release"]
 config = "debug"
 
-ijiritan_user_id = os.environ('IJIRITAN_USER_ID')
+ijiritan_user_id = os.environ['IJIRITAN_USER_ID']
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
