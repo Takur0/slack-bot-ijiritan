@@ -8,7 +8,7 @@ from argparse import ArgumentParser
 app = Flask(__name__)
 
 configs = ["debug", "release"]
-config = "debug"
+config = "release"
 
 ijiritan_user_id = os.environ['IJIRITAN_USER_ID']
 
