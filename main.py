@@ -37,7 +37,7 @@ def webhook():
                     json.dumps({"text":message+"です"}),
                     headers={'Content-Type': 'application/json'}
                 )
-            return json.dumps(body)
+        return json.dumps(body)
     else:
         body = request.get_data(as_text=True)
         webhook_urls = ['SLACK_WEBHOOK_URL','SLACK_WEBHOOK_URL_CALENDAR']
@@ -52,6 +52,7 @@ def webhook():
                 json.dumps({"text":body}),
                 headers={'Content-Type': 'application/json'}
             )
+        return 0
 
 
 if __name__ == "__main__":
