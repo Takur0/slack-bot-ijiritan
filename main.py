@@ -39,7 +39,7 @@ def webhook():
                 )
         elif body["type"] == "event_callback" and "bot_id" in body["event"] and body["event"]["bot_id"] == "BD8JR4TC2":
             if body["event"]["attachments"][0]["pretext"] == "New calendar event created":
-                event_title == body["event"]["attachments"][0]["title"]
+                event_title = body["event"]["attachments"][0]["title"]
                 requests.post(
                     os.environ[webhook_url],
                     json.dumps({"text":"新しいイベント:"+event_title+"が作成されました！"}),
