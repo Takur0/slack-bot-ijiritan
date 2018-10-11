@@ -22,7 +22,7 @@ def webhook():
             return Response(headers={'Content-Type': 'plain/text'}, response=body["challenge"])
 
         # when message.channel event occuring and message is not ijiritan's
-        elif body["type"] == "event_callback" and body["event"].has_key("user") and not body["event"]["user"] == ijiritan_user_id:
+        elif body["type"] == "event_callback" and not body["event"]["user"] == ijiritan_user_id:
             message = body["event"]["text"]
             # echo
             webhook_urls = ['SLACK_WEBHOOK_URL','SLACK_WEBHOOK_URL_CALENDAR']
