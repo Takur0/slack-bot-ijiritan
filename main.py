@@ -34,7 +34,7 @@ def webhook():
 
                 requests.post(
                     os.environ[webhook_url],
-                    json.dumps({"text":message}),
+                    json.dumps({"text":message+"です"}),
                     headers={'Content-Type': 'application/json'}
                 )
             return json.dumps(body)
