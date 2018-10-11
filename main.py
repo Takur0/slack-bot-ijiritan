@@ -48,9 +48,24 @@ def webhook():
                             continue
                     requests.post(
                         os.environ[webhook_url],
-                        json.dumps({"text":"新しいイベント:"+event_title+"が作成されました！"}),
+                        json.dumps({"text":"新しいイベント: \""+event_title+"\" が作成されました！"}),
                         headers={'Content-Type': 'application/json'}
                     )
+
+            if body["event"]["attachments"][0]["pretext"] == "Calendar event was cancelled":
+                event_title = body["event"]["attachments"][0]["title"]
+                webhook_urls = ['SLACK_WEBHOOK_URL','SLACK_WEBHOOK_URL_CALENDAR']
+                for webhook_url in webhook_urls:
+                    # when debug config, ijiritan never chat in public channel
+                    if config == "debug":
+                        if webhook_url == 'SLACK_WEBHOOK_URL':
+                            continue
+                    requests.post(
+                        os.environ[webhook_url],
+                        json.dumps({"text":"新しいイベント: \""+event_title+"\" が取り消されました…"}),
+                        headers={'Content-Type': 'application/json'}
+                    )
+
         return json.dumps(body)
 
     else:
