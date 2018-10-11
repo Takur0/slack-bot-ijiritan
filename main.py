@@ -11,7 +11,6 @@ configs = ["debug", "release"]
 config = os.environ['BUILD_CONFIG']
 
 ijiritan_user_id = os.environ['IJIRITAN_USER_ID']
-webhook_urls = ['SLACK_WEBHOOK_URL','SLACK_WEBHOOK_URL_CALENDAR']
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -25,6 +24,7 @@ def webhook():
         # when message.channel event occuring and message is not ijiritan's
         elif body["type"] == "event_callback" and "user" in body["event"] and not body["event"]["user"] == ijiritan_user_id:
             message = body["event"]["text"]
+            webhook_urls = ['SLACK_WEBHOOK_URL','SLACK_WEBHOOK_URL_CALENDAR']
             # echo
             for webhook_url in webhook_urls:
                 # when debug config, ijiritan never chat in public channel
@@ -40,6 +40,7 @@ def webhook():
         elif body["type"] == "event_callback" and "bot_id" in body["event"] and body["event"]["bot_id"] == "BD8JR4TC2":
             if body["event"]["attachments"][0]["pretext"] == "New calendar event created":
                 event_title = body["event"]["attachments"][0]["title"]
+                webhook_urls = ['SLACK_WEBHOOK_URL','SLACK_WEBHOOK_URL_CALENDAR']
                 for webhook_url in webhook_urls:
                     # when debug config, ijiritan never chat in public channel
                     if config == "debug":
@@ -51,7 +52,7 @@ def webhook():
                         headers={'Content-Type': 'application/json'}
                     )
         return json.dumps(body)
-        
+
     else:
         body = request.get_data(as_text=True)
         webhook_urls = ['SLACK_WEBHOOK_URL','SLACK_WEBHOOK_URL_CALENDAR']
