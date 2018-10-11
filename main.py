@@ -16,6 +16,7 @@ ijiritan_user_id = os.environ['IJIRITAN_USER_ID']
 def webhook():
     if request.is_json:
         body = request.get_json()
+        body = json.dumps(body)
         print(body)
         # when url verifing
         if body["type"] == "url_verification":
