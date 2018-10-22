@@ -7,7 +7,7 @@ from argparse import ArgumentParser
 
 app = Flask(__name__)
 
-configs = ["debug", "release"]
+configs = ["maintain","debug", "release"]
 config = os.environ['BUILD_CONFIG']
 
 ijiritan_user_id = os.environ['IJIRITAN_USER_ID']
@@ -27,6 +27,8 @@ def webhook():
             webhook_urls = ['SLACK_WEBHOOK_URL','SLACK_WEBHOOK_URL_CALENDAR']
             # echo
             for webhook_url in webhook_urls:
+                if config == "maintain":
+                    continue
                 # when debug config, ijiritan never chat in public channel
                 if config == "debug":
                     if webhook_url == 'SLACK_WEBHOOK_URL':
